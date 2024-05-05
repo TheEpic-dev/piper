@@ -26,6 +26,7 @@ class PiperVoice:
         model_path: Union[str, Path],
         config_path: Optional[Union[str, Path]] = None,
         use_cuda: bool = False,
+        use_rocm: bool = False,
     ) -> "PiperVoice":
         """Load an ONNX model and config."""
         if config_path is None:
@@ -42,6 +43,8 @@ class PiperVoice:
                     {"cudnn_conv_algo_search": "HEURISTIC"},
                 )
             ]
+        elif use_rocm:
+            providers = ["ROCMExecutionProvider"]
         else:
             providers = ["CPUExecutionProvider"]
 
